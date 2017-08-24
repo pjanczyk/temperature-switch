@@ -1,3 +1,12 @@
+/*
+ * Copyright (C) 2017  Piotr Janczyk
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ */
+
 #include "buttons.h"
 #include "display.h"
 #include "relay.h"
@@ -152,12 +161,11 @@ static void main_loop(void) {
 	
 	for (;;) {
 		if (!thermometer_begin_measure()) {
-			display_show_number(DISPLAY_ERROR_NUMBER, DISPLAY_FLAG_YELLOW);
-			
 			// If temperature is unknown, for safety reasons we set relay state to ON.
 			relay_set_on(true);
 			
-			_delay_ms(900);
+			display_show_number(DISPLAY_ERROR_NUMBER, DISPLAY_FLAG_YELLOW);
+			_delay_ms(1900);
 			display_show_nothing();
 			_delay_ms(100);
 			continue;
@@ -178,12 +186,11 @@ static void main_loop(void) {
 		setting_loop();
 		
 		if (!thermometer_finish_measure(&current_temperature)) {
-			display_show_number(DISPLAY_ERROR_NUMBER, DISPLAY_FLAG_YELLOW);
-			
 			// If temperature is unknown, for safety reasons we set relay state to ON.
 			relay_set_on(true);
 			
-			_delay_ms(900);
+			display_show_number(DISPLAY_ERROR_NUMBER, DISPLAY_FLAG_YELLOW);
+			_delay_ms(1900);
 			display_show_nothing();
 			_delay_ms(100);
 			continue;
